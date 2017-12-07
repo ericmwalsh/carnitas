@@ -12,6 +12,8 @@ module Generators
           request('/ticker', params.merge(limit: 0))
         end
 
+        alias_method :snapshot, :currency
+
         private
 
         def request(uri, params = {})

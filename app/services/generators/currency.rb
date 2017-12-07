@@ -5,20 +5,21 @@ module Generators
 
       private
 
-      def cache(currency_hash)
-        if currency = ::Currency.find_by_cmc_id(currency_hash['cmc_id'])
-          currency.update(currency_hash)
+      def cache(currency)
+        if existing_currency = ::Currency.find_by_cmc_id(currency['cmc_id'])
+          existing_currency.update(currency)
         else
-          ::Currency.create(currency_hash)
+          ::Currency.create(currency)
         end
       end
 
       def objects
         ::Generators::Providers::CoinMarketCap.currency.map do |currency|
-          currency.merge(
+          {
             'cmc_id' => currency['id'],
-            'cmc_last_updated' => currency['last_updated']
-          ).without('id', 'last_updated')
+            'name' => currency['name'],
+            'symbol' => currency['symbol']
+          }
         end
       end
 

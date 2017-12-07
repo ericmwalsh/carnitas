@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206065447) do
+ActiveRecord::Schema.define(version: 20171207073734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(version: 20171206065447) do
     t.string "cmc_id"
     t.string "name"
     t.string "symbol"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "snapshots", force: :cascade do |t|
+    t.string "cmc_id"
     t.integer "rank"
     t.float "price_usd"
     t.float "price_btc"
@@ -31,8 +37,6 @@ ActiveRecord::Schema.define(version: 20171206065447) do
     t.float "percent_change_24h"
     t.float "percent_change_7d"
     t.float "cmc_last_updated"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end
