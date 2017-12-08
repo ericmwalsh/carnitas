@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module Portfolio
   class Application < Rails::Application
-    ::Dotenv::Railtie.load
+    ::Dotenv::Railtie.load if Rails.env.development? || Rails.env.test?
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
