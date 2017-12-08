@@ -7,7 +7,7 @@ class PortfolioController < ApplicationController
       if snapshot = Currency.find_by_symbol(currency).try(:snapshots).try(:order, cmc_last_updated: :desc).try(:first)
         estimate_hash[currency] = {
           quantity: quantity,
-          price: snapshot['price_btc'],
+          price: snapshot['price_usd'],
           usd_value: quantity * snapshot['price_usd'],
           btc_value: quantity * snapshot['price_btc']
         }
