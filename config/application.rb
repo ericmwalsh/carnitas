@@ -10,6 +10,8 @@ module Portfolio
   class Application < Rails::Application
     ::Dotenv::Railtie.load if Rails.env.development? || Rails.env.test?
 
+    config.api_only = true
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
