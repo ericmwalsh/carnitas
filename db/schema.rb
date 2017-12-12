@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207073734) do
+ActiveRecord::Schema.define(version: 20171212062059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20171207073734) do
     t.float "percent_change_24h"
     t.float "percent_change_7d"
     t.float "cmc_last_updated"
+    t.index ["cmc_id", "cmc_last_updated"], name: "index_snapshots_on_cmc_id_and_cmc_last_updated", unique: true
   end
 
 end

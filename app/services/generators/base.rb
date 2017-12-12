@@ -3,18 +3,10 @@ module Generators
     class << self
 
       def run
-        objects.each {|object| cache(object)}
+        raise ::NotImplementedError, 'implement this in your subclass'
       end
 
       private
-
-      def cache(object)
-        raise ::NotImplementedError, 'implement this in your subclass'
-      end
-
-      def objects
-        raise ::NotImplementedError, 'implement this in your subclass'
-      end
 
     end
   end

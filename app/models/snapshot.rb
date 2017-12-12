@@ -17,6 +17,10 @@
 #  percent_change_7d  :float
 #  cmc_last_updated   :float
 #
+# Indexes
+#
+#  index_snapshots_on_cmc_id_and_cmc_last_updated  (cmc_id,cmc_last_updated) UNIQUE
+#
 
 class Snapshot < ApplicationRecord
 

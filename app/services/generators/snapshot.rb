@@ -3,25 +3,43 @@ module Generators
   class Snapshot < ::Generators::Base
     class << self
 
-      private
+      def run
+        new_snapshots = []
+        new_snapshots_hash = {}
+        snapshots = ::Generators::Providers::CoinMarketCap.snapshot
 
-      def cache(snapshot)
-        if existing_snapshot = ::Snapshot.find_by_cmc_id_and_cmc_last_updated(snapshot['cmc_id'], snapshot['cmc_last_updated'])
-          existing_snapshot.update(snapshot)
-        else
-          ::Snapshot.create(snapshot)
+        snapshots.each do |snapshot|
+          symbol = snapshot['symbol']
+          formatted_snapshot = format(snapshot)
+
+          unless existing_snapshot = ::Snapshot.find_by_cmc_id_and_cmc_last_updated(
+                                        formatted_snapshot['cmc_id'],
+                                        formatted_snapshot['cmc_last_updated']
+                                      )
+            new_snapshots << formatted_snapshot
+          end
+          new_snapshots_hash[symbol] = formatted_snapshot
         end
+
+        if new_snapshots.present?
+          ::Snapshot.create(new_snapshots)
+        end
+        update_latest_snapshots(new_snapshots_hash)
       end
 
-      def objects
-        ::Generators::Providers::CoinMarketCap.snapshot.map do |snapshot|
-          snapshot.merge(
-            {
-              'cmc_id' => snapshot['id'],
-              'cmc_last_updated' => snapshot['last_updated']
-            }
-          ).without('id', 'last_updated', 'name', 'symbol')
-        end
+      private
+
+      def update_latest_snapshots(snapshots_hash)
+        Rails.cache.write('latest-snapshots', snapshots_hash, expires_in: 1.day)
+      end
+
+      def format(snapshot)
+        snapshot.merge(
+          {
+            'cmc_id' => snapshot['id'],
+            'cmc_last_updated' => snapshot['last_updated']
+          }
+        ).without('id', 'last_updated', 'name', 'symbol')
       end
 
     end

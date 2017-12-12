@@ -17,7 +17,7 @@ module Generators
         private
 
         def request(uri, params = {})
-          Rails.cache.fetch("#{base_uri}#{uri} #{params.to_json}", expires_in: 4.minutes) do
+          Rails.cache.fetch("#{base_uri}#{uri} #{params.to_json}", expires_in: 1.minutes) do
             get(
               uri,
               {

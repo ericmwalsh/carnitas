@@ -1,16 +1,17 @@
 module PortfolioServices
   class Calculate
     class << self
-      #
+
       def run(portfolio_hash)
         estimate_hash = {}
+        latest_snapshots = fetch_latest_snapshots
         portfolio_hash.each do |currency, quantity|
-          if snapshot = Currency.find_by_symbol(currency).try(:snapshots).try(:order, cmc_last_updated: :desc).try(:first)
+          if snapshot = latest_snapshots[currency]
             estimate_hash[currency] = {
               quantity: quantity,
-              price: snapshot['price_usd'],
-              usd_value: quantity * snapshot['price_usd'],
-              btc_value: quantity * snapshot['price_btc']
+              price: snapshot['price_usd'].to_f,
+              usd_value: quantity * snapshot['price_usd'].to_f,
+              btc_value: quantity * snapshot['price_btc'].to_f
             }
           else
             estimate_hash[currency] = {
@@ -26,6 +27,13 @@ module PortfolioServices
           data: estimate_hash.sort_by{|curr, val_hash| -1 * val_hash[:usd_value]}.to_h
         }
       end
+
+      private
+
+      def fetch_latest_snapshots
+        Rails.cache.read('latest-snapshots') || {}
+      end
+
     end
   end
 end
