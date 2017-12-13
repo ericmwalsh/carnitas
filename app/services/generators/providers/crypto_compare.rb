@@ -19,6 +19,7 @@ module Generators
           if response['Response'] == 'Success'
             response['Data']
           else
+            # select distinct symbol from currencies except select distinct symbol from cc_snapshots ;
             puts "SYMBOL FAILED: #{symbol}"
           end
         end

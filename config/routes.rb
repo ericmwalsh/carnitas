@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root :to => 'home#index'
 
   post 'calculate' => 'portfolio#calculate'
-
+  post 'calculate_week' => 'portfolio#calculate_week'
+  post 'calculate_month' => 'portfolio#calculate_month'
 
 end

@@ -22,7 +22,13 @@ Sidekiq.configure_server do |config|
 end
 
 Sidekiq::Cron::Job.create(
-  name: 'CoinMarketCap worker - every 12min',
+  name: 'CoinMarketCap worker - every 5min',
   cron: '*/5 * * * *',
   class: 'CoinMarketCapWorker'
+)
+
+Sidekiq::Cron::Job.create(
+  name: 'CryptoCompare worker - every day at 00:30',
+  cron: '30 0 * * *',
+  class: 'CryptoCompareWorker'
 )
