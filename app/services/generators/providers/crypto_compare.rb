@@ -1,18 +1,27 @@
-# ::Generators::Providers::CoinMarketCap
+# ::Generators::Providers::CryptoCompare
 module Generators
   module Providers
-    class CoinMarketCap
+    class CryptoCompare
 
       include HTTParty
-      base_uri ENV['COIN_MARKET_CAP_URI']
+      base_uri ENV['CRYPTO_COMPARE_URI']
 
       class << self
 
-        def currency(params = {})
-          request('/ticker', params.merge(limit: 0))
+        def snapshots(symbol, params = {})
+          response = request(
+            '/histoday',
+            params.merge(
+              fsym: symbol,
+              tsym: 'USD'
+            )
+          )
+          if response['Response'] == 'Success'
+            response['Data']
+          else
+            puts "SYMBOL FAILED: #{symbol}"
+          end
         end
-
-        alias_method :snapshot, :currency
 
         private
 

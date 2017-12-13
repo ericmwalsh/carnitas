@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171212062059) do
+ActiveRecord::Schema.define(version: 20171213054005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cc_snapshots", force: :cascade do |t|
+    t.string "symbol"
+    t.float "close"
+    t.float "high"
+    t.float "low"
+    t.float "open"
+    t.float "volume_from"
+    t.float "volume_to"
+    t.float "time"
+    t.index ["symbol", "time"], name: "index_cc_snapshots_on_symbol_and_time", unique: true
+  end
 
   create_table "currencies", force: :cascade do |t|
     t.string "cmc_id"
