@@ -21,10 +21,8 @@ Sidekiq.configure_server do |config|
   }
 end
 
-unless Rails.env.production?
-  Sidekiq::Cron::Job.create(
-    name: 'CoinMarketCap worker - every 12min',
-    cron: '*/5 * * * *',
-    class: 'CoinMarketCapWorker'
-  )
-end
+Sidekiq::Cron::Job.create(
+  name: 'CoinMarketCap worker - every 12min',
+  cron: '*/5 * * * *',
+  class: 'CoinMarketCapWorker'
+)
