@@ -1,4 +1,10 @@
 class PortfolioController < ApplicationController
+  def aggregate_month
+    result = ::PortfolioServices::AggregateMonth.run
+
+    render json: result.merge(success: true)
+  end
+
   def calculate
     result = ::PortfolioServices::Calculate.run(params['portfolio'].as_json)
 

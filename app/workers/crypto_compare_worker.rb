@@ -3,5 +3,6 @@ class CryptoCompareWorker
 
   def perform(*args)
     ::Generators::CcSnapshot.run
+    ::PortfolioServices::AggregateMonth.run
   end
 end

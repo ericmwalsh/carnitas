@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   root :to => 'home#index'
 
+  get 'aggregate_month' => 'portfolio#aggregate_month'
   post 'calculate' => 'portfolio#calculate'
   post 'calculate_week' => 'portfolio#calculate_week'
   post 'calculate_month' => 'portfolio#calculate_month'
