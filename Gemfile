@@ -24,6 +24,8 @@ gem 'redis-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'oj'
+
 gem 'rspec'
 gem 'annotate'
 gem 'httparty'

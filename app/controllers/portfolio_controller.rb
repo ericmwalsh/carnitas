@@ -1,8 +1,9 @@
 class PortfolioController < ApplicationController
   def aggregate_month
-    result = ::PortfolioServices::AggregateMonth.run
-
-    render json: result.merge(success: true)
+    result = Rails.cache.fetch('::PortfolioServices::AggregateMonth.run', expires_in: 12.hours) do
+      ::PortfolioServices::AggregateMonth.run.merge(success: true).to_json
+    end
+    render json: result
   end
 
   def calculate

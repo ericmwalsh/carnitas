@@ -3,19 +3,17 @@ module PortfolioServices
     class << self
 
       def run
-        Rails.cache.fetch('::PortfolioServices::AggregateMonth.run', expires_in: 12.hours) do
-          cc_snapshots = ::CcSnapshot
-                          .where('symbol IS NOT NULL')
-                          .where("time > ?", 30.days.ago.to_i)
-                          .order(:symbol, :time)
-                          .pluck(:symbol, :high, :time)
-                          .group_by {|snapshot| snapshot[0]}
-                          .transform_values {|snapshots| snapshots.map{|snapshot| [snapshot[1], snapshot[2]]}}
+        cc_snapshots = ::CcSnapshot
+                        .where('symbol IS NOT NULL')
+                        .where("time > ?", 30.days.ago.to_i)
+                        .order(:symbol, :time)
+                        .pluck(:symbol, :high, :time)
+                        .group_by {|snapshot| snapshot[0]}
+                        .transform_values {|snapshots| snapshots.map{|snapshot| [snapshot[1], snapshot[2]]}}
 
-          {
-            data: cc_snapshots
-          }
-        end
+        {
+          data: cc_snapshots
+        }
       end
 
     end
