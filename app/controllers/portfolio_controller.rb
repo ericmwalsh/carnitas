@@ -1,4 +1,6 @@
 class PortfolioController < ApplicationController
+  # include Secured
+
   def aggregate_month
     result = Rails.cache.fetch('::PortfolioServices::AggregateMonth.run', expires_in: 12.hours) do
       ::PortfolioServices::AggregateMonth.run.merge(success: true).to_json

@@ -24,6 +24,8 @@ gem 'redis-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'jwt'
+
 gem 'oj'
 
 gem 'rspec'
