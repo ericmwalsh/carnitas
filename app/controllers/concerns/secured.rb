@@ -10,8 +10,12 @@ module Secured
 
   private
 
+  def current_user
+    @current_user
+  end
+
   def authenticate_request!
-    auth_token
+    @current_user ||= auth_token[0]['sub']
   rescue JWT::VerificationError, JWT::DecodeError
     render json: { errors: ['Not Authenticated'] }, status: :unauthorized
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213054005) do
+ActiveRecord::Schema.define(version: 20180108050608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(version: 20171213054005) do
     t.float "volume_to"
     t.float "time"
     t.index ["symbol", "time"], name: "index_cc_snapshots_on_symbol_and_time", unique: true
+  end
+
+  create_table "crypto_portfolios", force: :cascade do |t|
+    t.string "user_id"
+    t.string "holdings", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "currencies", force: :cascade do |t|

@@ -12,4 +12,8 @@ Rails.application.routes.draw do
   post 'calculate_week' => 'portfolio#calculate_week'
   post 'calculate_month' => 'portfolio#calculate_month'
 
+  get 'portfolio' => 'crypto_portfolio#index'
+  post 'portfolio' => 'crypto_portfolio#create_or_update'
+  # put 'portfolio' => 'crypto_portfolio#update'
+
 end
