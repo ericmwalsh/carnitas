@@ -2,13 +2,7 @@ class HomeController < ApplicationController
 
   def index
     render json: {
-      succes: true,
-      last_updated: Snapshot.
-                      where('cmc_last_updated IS NOT NULL').
-                      order(cmc_last_updated: :desc).
-                      select(:cmc_last_updated).
-                      first.
-                      cmc_last_updated
+      succes: true
     }
   end
 
