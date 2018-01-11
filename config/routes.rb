@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
 
   root :to => 'home#index'
+  get 'cmc_cache' => 'home#cmc_cache'
 
   get 'aggregate_month' => 'portfolio#aggregate_month'
   post 'calculate' => 'portfolio#calculate'
