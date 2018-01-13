@@ -22,6 +22,12 @@ Sidekiq.configure_server do |config|
 end
 
 Sidekiq::Cron::Job.create(
+  name: 'PriceRefresh worker - every 1min',
+  cron: '*/1 * * * *',
+  class: 'PriceRefreshWorker'
+)
+
+Sidekiq::Cron::Job.create(
   name: 'CoinMarketCap worker - every 5min',
   cron: '*/5 * * * *',
   class: 'CoinMarketCapWorker'

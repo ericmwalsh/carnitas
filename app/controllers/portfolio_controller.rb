@@ -25,4 +25,10 @@ class PortfolioController < ApplicationController
 
     render json: result.merge(success: true)
   end
+
+  # GET /cmc_cache
+  def cmc_cache
+    result = ::PortfolioServices::CmcCache.run
+    render json: result
+  end
 end
