@@ -6,7 +6,7 @@ module Generators
       def run
         new_snapshots = []
         new_snapshots_hash = {}
-        snapshots = ::Generators::Providers::CoinMarketCap.snapshot
+        snapshots = ::ApiIntegrations::CoinMarketCap.snapshot
 
         snapshots.each do |snapshot|
           symbol = snapshot['symbol']

@@ -1,0 +1,10 @@
+{
+    "prettier.eslintIntegration": true,
+    "prettier.parser": "flow",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "flow.useNPMPackagedFlow": true,
+    "javascript.validate.enable": false,
+    "prettier.trailingComma": "all",
+    "editor.formatOnSave": true
+}

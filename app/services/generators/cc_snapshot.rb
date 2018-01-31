@@ -7,7 +7,7 @@ module Generators
         currencies = ::Currency.distinct.pluck(:symbol)
         currencies.in_groups_of(25, false).each do |group|
           group.each do |symbol|
-            snapshots = ::Generators::Providers::CryptoCompare.snapshots(symbol == 'MIOTA' ? 'IOTA' : symbol)
+            snapshots = ::ApiIntegrations::CryptoCompare.snapshots(symbol == 'MIOTA' ? 'IOTA' : symbol)
             if snapshots.present?
               new_snapshots = []
               timestamps = []

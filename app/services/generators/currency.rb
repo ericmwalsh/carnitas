@@ -4,7 +4,7 @@ module Generators
     class << self
 
       def run
-        currencies = ::Generators::Providers::CoinMarketCap.currency
+        currencies = ::ApiIntegrations::CoinMarketCap.currency
         existing_currencies = ::Currency.where(cmc_id: currencies.map{|curr| curr['id']})
 
         currencies.each do |currency|
