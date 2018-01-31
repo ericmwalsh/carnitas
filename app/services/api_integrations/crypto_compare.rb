@@ -1,8 +1,6 @@
 # ::ApiIntegrations::CryptoCompare
 module ApiIntegrations
-  class CryptoCompare
-
-    include HTTParty
+  class CryptoCompare < ::ApiIntegrations::Base
     base_uri ENV['CRYPTO_COMPARE_URI']
 
     class << self
@@ -13,31 +11,15 @@ module ApiIntegrations
           params.merge(
             fsym: symbol,
             tsym: 'USD'
-          )
+          ),
+          1.minutes
         )
         if response['Response'] == 'Success'
           response['Data']
         else
-          # select distinct symbol from currencies except select distinct symbol from cc_snapshots ;
+          # select distinct symbol from currencies except select distinct symbol from cc_snapshots;
           puts "SYMBOL FAILED: #{symbol}"
         end
-      end
-
-      private
-
-      def request(uri, params = {})
-        Rails.cache.fetch("#{base_uri}#{uri} #{params.to_json}", expires_in: 1.minutes) do
-          get(
-            uri,
-            {
-              query: params
-            }
-          ).parsed_response
-        end
-      end
-
-      def delete_key(uri, params = {})
-        Rails.cache.delete("#{base_uri}#{uri} #{params.to_json}")
       end
 
     end
