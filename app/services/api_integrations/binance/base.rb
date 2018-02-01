@@ -34,19 +34,6 @@ module ApiIntegrations
           )
         end
 
-        # Internal: Append key-value pair to REST query string
-        #
-        # query - The String of the existing request query url.
-        #
-        # key   - The String that represents the param type.
-        #
-        # value - The String that represents the param value.
-        def add_query_param(query, key, value)
-          query = query.to_s
-          query << '&' unless query.empty?
-          query << "#{Faraday::Utils.escape key}=#{Faraday::Utils.escape value}"
-        end
-
         private
 
         def request(client, method, url, options = {})
@@ -71,8 +58,8 @@ module ApiIntegrations
             conn.request :json
             conn.response :json, content_type: /\bjson$/
             conn.headers['X-MBX-APIKEY'] = api_key
-            conn.use TimestampMiddleware
-            conn.use SignatureMiddleware, secret_key
+            conn.use ::ApiIntegrations::Binance::TimestampMiddleware
+            conn.use ::ApiIntegrations::Binance::SignatureMiddleware, secret_key
             conn.adapter adapter
           end
         end
@@ -82,37 +69,6 @@ module ApiIntegrations
             conn.response :json, content_type: /\bjson$/
             conn.headers['X-MBX-APIKEY'] = api_key
             conn.adapter adapter
-          end
-        end
-
-        # Generate a timestamp in milliseconds and append to query string
-        TimestampMiddleware = Struct.new(:app) do
-          def call(env)
-            env.url.query = ::ApiIntegrations::Binance::Base.add_query_param(
-              env.url.query,
-              'timestamp',
-              DateTime.now.strftime('%Q')
-            )
-
-            app.call env
-          end
-        end
-
-        # Sign the query string using HMAC(sha-256) and appends to query string
-        SignatureMiddleware = Struct.new(:app, :secret_key) do
-          def call(env)
-            value = OpenSSL::HMAC.hexdigest(
-              OpenSSL::Digest.new('sha256'),
-              secret_key,
-              env.url.query
-            )
-            env.url.query = ::ApiIntegrations::Binance::Base.add_query_param(
-              env.url.query,
-              'signature',
-              value
-            )
-
-            app.call env
           end
         end
 
