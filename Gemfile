@@ -30,7 +30,11 @@ gem 'oj'
 
 gem 'rspec'
 gem 'annotate'
+
 gem 'httparty'
+
+gem 'faraday'
+gem 'faraday_middleware'
 
 gem 'sidekiq'
 gem 'sidekiq-cron'

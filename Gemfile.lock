@@ -56,6 +56,10 @@ GEM
     erubi (1.7.0)
     et-orbi (1.0.8)
       tzinfo
+    faraday (0.14.0)
+      multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.12.2)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.18)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -78,6 +82,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_xml (0.6.0)
+    multipart-post (2.0.0)
     nio4r (2.1.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
@@ -190,6 +195,8 @@ DEPENDENCIES
   annotate
   byebug
   dotenv-rails
+  faraday
+  faraday_middleware
   httparty
   jwt
   listen (>= 3.0.5, < 3.2)
