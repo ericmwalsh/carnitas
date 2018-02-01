@@ -1,35 +1,32 @@
-# ::ApiIntegrations::Binance::AccountApi
+# ::ApiIntegrations::Binance::WithdrawApi
 module ApiIntegrations
   module Binance
-    class AccountApi
+    class WithdrawApi
 
       class << self
 
-        def account_info(api_key, secret_key)
+        def deposit_history(api_key, secret_key)
           request(
             :get,
-            'v3/account',
+            'v3/depositHistory.html',
             api_key,
             secret_key
           )
         end
 
-        def trades_list(api_key, secret_key, symbol)
+        def withdraw_history(api_key, secret_key)
           request(
             :get,
-            'v3/myTrades',
+            'v3/withdrawHistory.html',
             api_key,
-            secret_key,
-            {
-              symbol: symbol
-            }
+            secret_key
           )
         end
 
         private
 
         def request(method, url, api_key, secret_key, options = {})
-          ::ApiIntegrations::Binance::Base.signed_request(
+          ::ApiIntegrations::Binance::Base.withdraw_request(
             method,
             url,
             api_key,

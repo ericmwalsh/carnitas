@@ -34,6 +34,15 @@ module ApiIntegrations
           )
         end
 
+        def withdraw_request(method, url, api_key, secret_key, options = {})
+          request(
+            withdraw_client(api_key, secret_key),
+            method,
+            url,
+            options
+          )
+        end
+
         private
 
         def request(client, method, url, options = {})
@@ -46,7 +55,7 @@ module ApiIntegrations
         end
 
         def public_client(adapter = DEFAULT_ADAPTER)
-          Faraday.new(url: "#{BASE_URL}") do |conn|
+          Faraday.new(url: "#{BASE_URL}/api") do |conn|
             conn.request :json
             conn.response :json, content_type: /\bjson$/
             conn.adapter adapter
@@ -54,7 +63,7 @@ module ApiIntegrations
         end
 
         def signed_client(api_key, secret_key, adapter = DEFAULT_ADAPTER)
-          Faraday.new(url: "#{BASE_URL}") do |conn|
+          Faraday.new(url: "#{BASE_URL}/api") do |conn|
             conn.request :json
             conn.response :json, content_type: /\bjson$/
             conn.headers['X-MBX-APIKEY'] = api_key
@@ -65,9 +74,20 @@ module ApiIntegrations
         end
 
         def verified_client(api_key, adapter = DEFAULT_ADAPTER)
-          Faraday.new(url: "#{BASE_URL}") do |conn|
+          Faraday.new(url: "#{BASE_URL}/api") do |conn|
             conn.response :json, content_type: /\bjson$/
             conn.headers['X-MBX-APIKEY'] = api_key
+            conn.adapter adapter
+          end
+        end
+
+        def withdraw_client(api_key, secret_key, adapter = DEFAULT_ADAPTER)
+          Faraday.new(url: "#{BASE_URL}/wapi") do |conn|
+            conn.request :url_encoded
+            conn.response :json, content_type: /\bjson$/
+            conn.headers['X-MBX-APIKEY'] = api_key
+            conn.use ::ApiIntegrations::Binance::TimestampMiddleware
+            conn.use ::ApiIntegrations::Binance::SignatureMiddleware, secret_key
             conn.adapter adapter
           end
         end
