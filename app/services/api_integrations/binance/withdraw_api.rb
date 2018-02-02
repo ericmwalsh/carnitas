@@ -5,6 +5,15 @@ module ApiIntegrations
 
       class << self
 
+        def account_status(api_key, secret_key)
+          request(
+            :get,
+            'v3/accountStatus.html',
+            api_key,
+            secret_key
+          )
+        end
+
         def deposit_history(api_key, secret_key)
           request(
             :get,
