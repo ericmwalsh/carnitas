@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180108050608) do
+ActiveRecord::Schema.define(version: 20180207063408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_keys", force: :cascade do |t|
+    t.string "user_id", null: false
+    t.string "provider", null: false
+    t.string "key", null: false
+    t.string "secret", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "cc_snapshots", force: :cascade do |t|
     t.string "symbol"

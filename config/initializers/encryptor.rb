@@ -1,0 +1,1 @@
+ENCRYPTOR = ::Utilities::Encryptor.generate_encryptor
