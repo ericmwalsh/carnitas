@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20180207063408) do
     t.string "provider", null: false
     t.string "key", null: false
     t.string "secret", null: false
+    t.string "encryptor", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

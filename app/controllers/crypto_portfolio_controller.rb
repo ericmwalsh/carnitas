@@ -3,20 +3,16 @@ class CryptoPortfolioController < ApplicationController
 
   # GET /portfolio
   def index
-    result = {
-      data: ::CryptoPortfolioServices::Index.run(current_user)
-    }
-
-    render json: result
+    render json: data_wrapper(
+      ::CryptoPortfolioServices::Index.run(current_user)
+    )
   end
 
   # POST /portfolio
   def create_or_update
-    result = {
-      data: ::CryptoPortfolioServices::CreateOrUpdate.run(current_user, portfolio_params)
-    }
-
-    render json: result
+    render json: data_wrapper(
+      ::CryptoPortfolioServices::CreateOrUpdate.run(current_user, portfolio_params)
+    )
   end
 
   # # PUT /portfolio

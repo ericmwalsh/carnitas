@@ -17,4 +17,9 @@ Rails.application.routes.draw do
   post 'portfolio' => 'crypto_portfolio#create_or_update'
   # put 'portfolio' => 'crypto_portfolio#update'
 
+  get 'api_keys' => 'api_keys#index'
+  post 'api_keys' => 'api_keys#create'
+  put 'api_keys' => 'api_keys#update'
+  delete 'api_keys' => 'api_keys#delete'
+
 end

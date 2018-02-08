@@ -7,6 +7,7 @@
 #  provider   :string           not null
 #  key        :string           not null
 #  secret     :string           not null
+#  encryptor  :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

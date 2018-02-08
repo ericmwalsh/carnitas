@@ -5,6 +5,7 @@ class CreateApiKeys < ActiveRecord::Migration[5.1]
       t.string :provider, null: false
       t.string :key, null: false
       t.string :secret, null: false
+      t.string :encryptor, null: false
 
       t.timestamps
     end
