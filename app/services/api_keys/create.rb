@@ -8,25 +8,24 @@ module ApiKeys
       #   key: 'abc123',
       #   secret: 'zyx987'
       # }
-      def run(user_id, api_key)
+      def run(user_id, api_key_params)
         new_key = ::ApiKey.create(
-          api_key_params(user_id, api_key)
+          api_key(user_id, api_key_params)
         )
-        # byebug
-        # NEED TO CATCH THE ERROR AND WRAP IT UP LIKE AN ERROR...
-        if new_key
-          'success'
+
+        if new_key.errors.any?
+          raise ::Exceptions::BadSaveError.new(new_key.errors.messages)
         else
-          'failure'
+          'success'
         end
       end
 
       private
 
-      def api_key_params(user_id, api_key)
-        api_key.merge(
+      def api_key(user_id, api_key_params)
+        api_key_params.merge(
           user_id: user_id,
-          secret: ::Utilities::Encryptor.encrypt(api_key[:secret]),
+          secret: ::Utilities::Encryptor.encrypt(api_key_params[:secret]),
           encryptor: ::Utilities::Encryptor.encryptor
         )
       end
