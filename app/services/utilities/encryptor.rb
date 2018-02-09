@@ -21,6 +21,10 @@ module Utilities
         ::ENCRYPTOR.decrypt_and_verify(value)
       end
 
+      def encryptor
+        '00'
+      end
+
     end
   end
 end

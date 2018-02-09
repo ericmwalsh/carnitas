@@ -33,7 +33,7 @@ class ApiKeysController < ApplicationController
 
   def api_key_params
     # whitelist params
-    params.require(:api_keys).permit(:user_id, :provider, :key, :secret)
+    params.require(:api_key).permit(:provider, :key, :secret)
   end
 
 end
