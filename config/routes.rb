@@ -23,5 +23,7 @@ Rails.application.routes.draw do
   delete 'api_keys' => 'api_keys#delete'
 
   get 'new_portfolio' => 'portfolio#aggregate'
+  get 'new_portfolio/exchanges' => 'portfolio#exchanges'
+  get 'new_portfolio/inputs' => 'portfolio#inputs'
 
 end

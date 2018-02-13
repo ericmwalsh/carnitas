@@ -46,12 +46,32 @@ module ApiIntegrations
         private
 
         def request(client, method, url, options = {})
-          response = client.send(method) do |req|
-            req.url url
-            req.params.merge! options
+          if requests_disabled?
+            raise ::Exceptions::BinanceLimitError
+          else
+            response = client.send(method) do |req|
+              req.url url
+              req.params.merge! options
+            end
+            if response.status == 429
+              disable_requests
+            end
+            response.body
           end
+        end
 
-          response.body
+        def disable_requests
+          Rails.cache.fetch('binance-requests-disabled', expires_in: 3.minutes) do
+            true
+          end
+        end
+
+        def enable_requests
+          Rails.cache.delete('binance-requests-disabled')
+        end
+
+        def requests_disabled?
+          Rails.cache.fetch('binance-requests-disabled').present?
         end
 
         def public_client(adapter = DEFAULT_ADAPTER)
