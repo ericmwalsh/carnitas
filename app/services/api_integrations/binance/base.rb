@@ -71,7 +71,7 @@ module ApiIntegrations
         end
 
         def requests_disabled?
-          Rails.cache.fetch('binance-requests-disabled').present?
+          Rails.cache.read('binance-requests-disabled').present?
         end
 
         def public_client(adapter = DEFAULT_ADAPTER)

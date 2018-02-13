@@ -30,17 +30,27 @@ class ApiKey < ApplicationRecord
     message: "%{value} is not a valid encryptor"
   }
 
+  after_update :clear_holdings
+
   def api_secret
     @api_secret ||= ::Utilities::Encryptor.decrypt(secret)
   end
 
   def holdings
-    @holdings ||= begin
+    @holdings ||= Rails.cache.fetch(cache_key, expires_in: 1.day) do
       "::ApiIntegrations::#{provider.capitalize}::Utils".constantize.holdings(
         key,
         api_secret
       )
     end
+  end
+
+  def clear_holdings
+    Rails.cache.delete(cache_key)
+  end
+
+  def cache_key
+    @cache_key ||= "api_key:#{user_id}:#{key}"
   end
 
 end
