@@ -7,11 +7,11 @@ Rails.application.routes.draw do
 
   root :to => 'home#index'
 
-  get 'aggregate_month' => 'portfolio#aggregate_month'
-  post 'calculate' => 'portfolio#calculate'
-  post 'calculate_week' => 'portfolio#calculate_week'
-  post 'calculate_month' => 'portfolio#calculate_month'
-  get 'cmc_cache' => 'portfolio#cmc_cache'
+  get 'aggregate_month' => 'old_portfolio#aggregate_month'
+  post 'calculate' => 'old_portfolio#calculate'
+  post 'calculate_week' => 'old_portfolio#calculate_week'
+  post 'calculate_month' => 'old_portfolio#calculate_month'
+  get 'cmc_cache' => 'old_portfolio#cmc_cache'
 
   get 'portfolio' => 'crypto_portfolio#index'
   post 'portfolio' => 'crypto_portfolio#create_or_update'
@@ -21,5 +21,7 @@ Rails.application.routes.draw do
   post 'api_keys' => 'api_keys#create'
   put 'api_keys' => 'api_keys#update'
   delete 'api_keys' => 'api_keys#delete'
+
+  get 'new_portfolio' => 'portfolio#aggregate'
 
 end

@@ -31,7 +31,16 @@ class ApiKey < ApplicationRecord
   }
 
   def api_secret
-    ::Utilities::Encryptor.decrypt(secret)
+    @api_secret ||= ::Utilities::Encryptor.decrypt(secret)
+  end
+
+  def holdings
+    @holdings ||= begin
+      "::ApiIntegrations::#{provider.capitalize}::Utils".constantize.holdings(
+        key,
+        api_secret
+      )
+    end
   end
 
 end

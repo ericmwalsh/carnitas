@@ -1,34 +1,30 @@
 class PortfolioController < ApplicationController
-  # include Secured
+  include Secured # current_user
 
-  def aggregate_month
-    result = Rails.cache.fetch('::PortfolioServices::AggregateMonth.run', expires_in: 12.hours) do
-      ::PortfolioServices::AggregateMonth.run.merge(success: true).to_json
-    end
-    render json: result
+  # GET /new_portfolio
+  def aggregate
+    render json: data_wrapper(
+      ::Portfolio::Aggregate.run(current_user)
+    )
   end
 
-  def calculate
-    result = ::PortfolioServices::Calculate.run(params['portfolio'].as_json)
-
-    render json: result.merge(success: true)
+  # GET /new_portfolio/exchanges
+  def exchanges
+    render json: data_wrapper(
+      ::Portfolio::Exchanges.run(current_user)
+    )
   end
 
-  def calculate_week
-    result = ::PortfolioServices::CalculateDuration.run(7, params['portfolio'].as_json)
-
-    render json: result.merge(success: true)
+  # GET /new_portfolio/inputs
+  def inputs
+    render json: data_wrapper(
+      ::Portfolio::Inputs.run(current_user)
+    )
   end
 
-  def calculate_month
-    result = ::PortfolioServices::CalculateDuration.run(30, params['portfolio'].as_json)
+  # # GET /new_portfolio/wallets
+  # def wallets
+  #   #
+  # end
 
-    render json: result.merge(success: true)
-  end
-
-  # GET /cmc_cache
-  def cmc_cache
-    result = ::PortfolioServices::CmcCache.run
-    render json: result
-  end
 end
