@@ -22,3 +22,9 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+Issue with SSL...?
+
+`Faraday::SSLError: SSL_connect returned=1 errno=0 state=error: certificate verify failed`
+
+https://github.com/google/google-api-ruby-client/issues/235#issuecomment-169956795
