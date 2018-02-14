@@ -42,8 +42,8 @@ gem 'sidekiq-cron'
 gem 'rack-cors', :require => 'rack/cors'
 
 # EXCHANGES
-gem 'binance'
-gem 'bittrex', git: 'https://github.com/ChalupaIO/bittrex', branch: 'master'
+# gem 'binance'
+# gem 'bittrex', git: 'https://github.com/ChalupaIO/bittrex', branch: 'master'
 gem 'coinbase'
 gem 'coinbase-exchange'
 

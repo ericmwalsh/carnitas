@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/ChalupaIO/bittrex
-  revision: 7080f6f13f84a58c2299f990ae3118a16d4177f9
-  branch: master
-  specs:
-    bittrex (0.0.6)
-      faraday (>= 0.14.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -53,10 +45,6 @@ GEM
       rake (>= 10.4, < 13.0)
     arel (8.0.0)
     bigdecimal (1.3.4)
-    binance (0.4.3)
-      faraday (~> 0.12)
-      faraday_middleware (~> 0.12)
-      faye-websocket (~> 0.10)
     bindex (0.5.0)
     builder (3.2.3)
     byebug (10.0.0)
@@ -228,8 +216,6 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  binance
-  bittrex!
   byebug
   coinbase
   coinbase-exchange

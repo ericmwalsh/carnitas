@@ -47,7 +47,7 @@ module ApiIntegrations
 
         def request(client, method, url, options = {})
           if requests_disabled?
-            raise ::Exceptions::BinanceLimitError
+            raise ::Exceptions::RateLimitError
           else
             response = client.send(method) do |req|
               req.url url

@@ -4,7 +4,7 @@ module Exceptions
   FORBIDDEN = 403
   NOT_FOUND = 404
   BAD_SAVE = 422
-  BINANCE_LIMIT = 429
+  RATE_LIMIT = 429
 
   class BadRequestError < StandardError
     attr_reader :status
@@ -33,9 +33,9 @@ module Exceptions
     end
   end
 
-  class BinanceLimitError < BadRequestError
-    def initialize(message = 'Binance Rate Limit reached')
-      super(message, BINANCE_LIMIT)
+  class RateLimitError < BadRequestError
+    def initialize(message = 'API Rate Limit reached')
+      super(message, RATE_LIMIT)
     end
   end
 
