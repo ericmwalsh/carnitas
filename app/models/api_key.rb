@@ -10,6 +10,7 @@
 #  encryptor  :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  passphrase :string
 #
 # Indexes
 #
@@ -29,8 +30,13 @@ class ApiKey < ApplicationRecord
     in: %W(00 01 02 10 11 12 20 21 22),
     message: "%{value} is not a valid encryptor"
   }
+  validates :passphrase, presence: true, if: :gdax_provider?
 
   after_update :clear_holdings
+
+  def gdax_provider?
+    provider == 'gdax'
+  end
 
   def api_secret
     @api_secret ||= ::Utilities::Encryptor.decrypt(secret)
@@ -38,10 +44,18 @@ class ApiKey < ApplicationRecord
 
   def holdings
     @holdings ||= Rails.cache.fetch(cache_key, expires_in: 1.day) do
-      "::ApiIntegrations::#{provider.capitalize}::Utils".constantize.holdings(
-        key,
-        api_secret
-      )
+      if provider == 'gdax'
+        ::ApiIntegrations::Gdax::Utils.holdings(
+          key,
+          api_secret,
+          passphrase
+        )
+      else
+        "::ApiIntegrations::#{provider.capitalize}::Utils".constantize.holdings(
+          key,
+          api_secret
+        )
+      end
     end
   end
 
