@@ -37,12 +37,12 @@ class ApiKey < ApplicationRecord
   end
 
   def holdings
-    # @holdings ||= Rails.cache.fetch(cache_key, expires_in: 1.day) do
-    "::ApiIntegrations::#{provider.capitalize}::Utils".constantize.holdings(
-      key,
-      api_secret
-    )
-    # end
+    @holdings ||= Rails.cache.fetch(cache_key, expires_in: 1.day) do
+      "::ApiIntegrations::#{provider.capitalize}::Utils".constantize.holdings(
+        key,
+        api_secret
+      )
+    end
   end
 
   def clear_holdings
