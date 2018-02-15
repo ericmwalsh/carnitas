@@ -26,4 +26,6 @@ Rails.application.routes.draw do
   get 'new_portfolio/exchanges' => 'portfolio#exchanges'
   get 'new_portfolio/inputs' => 'portfolio#inputs'
 
+  get 'test' => 'home#hello_world'
+
 end
