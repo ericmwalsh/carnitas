@@ -25,7 +25,7 @@ class ApiKeysController < ApplicationController
   # DEL /api_keys
   def delete
     render json: data_wrapper(
-      ::ApiKeys::Delete.run(current_user)
+      ::ApiKeys::Delete.run(current_user, api_key_params)
     )
   end
 

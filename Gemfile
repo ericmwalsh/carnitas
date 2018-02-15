@@ -44,7 +44,7 @@ gem 'rack-cors', :require => 'rack/cors'
 # EXCHANGES
 # gem 'binance'
 # gem 'bittrex', git: 'https://github.com/ChalupaIO/bittrex', branch: 'master'
-gem 'coinbase'
+gem 'coinbase', require: 'coinbase/wallet'
 gem 'coinbase-exchange'
 
 group :development, :test do

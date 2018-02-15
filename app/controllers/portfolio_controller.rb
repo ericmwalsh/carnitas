@@ -11,7 +11,9 @@ class PortfolioController < ApplicationController
   # GET /new_portfolio/exchanges
   def exchanges
     render json: data_wrapper(
-      ::Portfolio::Exchanges.run(current_user)
+      ::Portfolio::Exchanges::All.fetch_exchange_holdings(
+        current_user
+      )
     )
   end
 

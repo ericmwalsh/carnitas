@@ -8,7 +8,8 @@ module ApiKeys
       #   key: 'abc123',
       #   secret: 'zyx987'
       # }
-      def run(user_id, key)
+      def run(user_id, api_key_params)
+        key = api_key_params[:key]
         existing_key = ::ApiKey.find_by(
           user_id: user_id,
           key: key

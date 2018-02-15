@@ -32,7 +32,8 @@ class ApiKey < ApplicationRecord
   }
   validates :passphrase, presence: true, if: :gdax_provider?
 
-  after_update :clear_holdings
+  after_commit :update_holdings, on: [:create, :update]
+  after_commit :clear_holdings, on: :destroy
 
   def gdax_provider?
     provider == 'gdax'
@@ -42,29 +43,15 @@ class ApiKey < ApplicationRecord
     @api_secret ||= ::Utilities::Encryptor.decrypt(secret)
   end
 
-  def holdings
-    @holdings ||= Rails.cache.fetch(cache_key, expires_in: 1.day) do
-      if provider == 'gdax'
-        ::ApiIntegrations::Gdax::Utils.holdings(
-          key,
-          api_secret,
-          passphrase
-        )
-      else
-        "::ApiIntegrations::#{provider.capitalize}::Utils".constantize.holdings(
-          key,
-          api_secret
-        )
-      end
-    end
+  def update_holdings
+    ::ApiKeys::UpdateHoldingsWorker.perform_async(id)
   end
 
   def clear_holdings
-    Rails.cache.delete(cache_key)
-  end
-
-  def cache_key
-    @cache_key ||= "api_key:#{user_id}:#{key}"
+    ::ApiKeys::ClearHoldingsWorker.perform_async(
+      user_id,
+      ::Portfolio::Exchanges::Single.cache_key(self)
+    )
   end
 
 end
