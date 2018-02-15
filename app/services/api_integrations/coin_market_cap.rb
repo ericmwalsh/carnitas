@@ -13,7 +13,12 @@ module ApiIntegrations
       alias_method :get_request, :currency
 
       def refresh(params = {})
-        refresh_request('/ticker', params.merge(limit: 0))
+        parsed_response = refresh_request('/ticker', params.merge(limit: 0))
+        symbols = parsed_response.map {|currency| currency['symbol']}
+        Rails.cache.write(
+          'symbols',
+          symbols
+        ) && symbols
       end
 
     end

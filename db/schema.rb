@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214070802) do
+ActiveRecord::Schema.define(version: 20180215063332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 20180214070802) do
     t.string "symbol"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "inputs", force: :cascade do |t|
+    t.string "user_id", null: false
+    t.string "symbol", null: false
+    t.float "amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "symbol"], name: "index_inputs_on_user_id_and_symbol", unique: true
   end
 
   create_table "snapshots", force: :cascade do |t|

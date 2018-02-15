@@ -10,15 +10,17 @@ module ApiIntegrations
       private
 
       def refresh_request(uri, params = {})
-        Rails.cache.write(
+      parsed_response = get(
+        uri,
+        {
+          query: params
+        }
+      ).parsed_response
+
+      Rails.cache.write(
           "#{base_uri}#{uri} #{params.to_json}",
-          get(
-            uri,
-            {
-              query: params
-            }
-          ).parsed_response
-        )
+          parsed_response
+        ) && parsed_response
       end
 
       def request(uri, params = {}, expires_in = 1.hour)

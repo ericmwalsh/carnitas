@@ -21,7 +21,7 @@ module ApiKeys
         end
 
         if existing_key.errors.any?
-          raise ::Exceptions::BadSaveError.new(new_key.errors.messages)
+          raise ::Exceptions::BadSaveError.new(existing_key.errors.messages)
         else
           'success'
         end
