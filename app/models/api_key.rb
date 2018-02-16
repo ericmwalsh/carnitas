@@ -44,11 +44,11 @@ class ApiKey < ApplicationRecord
   end
 
   def update_holdings
-    ::ApiKeys::UpdateHoldingsWorker.perform_async(id)
+    ::Portfolio::ApiKeys::UpdateHoldingsWorker.perform_async(id)
   end
 
   def clear_holdings
-    ::ApiKeys::ClearHoldingsWorker.perform_async(
+    ::Portfolio::ApiKeys::ClearHoldingsWorker.perform_async(
       user_id,
       ::Portfolio::Exchanges::Single.cache_key(self)
     )

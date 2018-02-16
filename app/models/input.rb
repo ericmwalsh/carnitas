@@ -24,9 +24,15 @@ class Input < ApplicationRecord
 
   validates_uniqueness_of :symbol, scope: :user_id
 
+  after_commit :update_holdings
+
   def self.get_currency_symbols
     Rails.cache.fetch('symbols') do
       ::ApiIntegrations::CoinMarketCap.refresh
     end
+  end
+
+  def update_holdings
+    ::Portfolio::Inputs::UpdateHoldingsWorker.perform_async(user_id)
   end
 end

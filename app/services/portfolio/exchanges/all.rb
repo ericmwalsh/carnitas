@@ -36,7 +36,7 @@ module Portfolio
         private
 
         def api_keys(user_id) # string
-          ApiKey.where(user_id: user_id)
+          ::ApiKey.where(user_id: user_id)
         end
 
         def add_holdings(holdings, exchange_holdings) # hash, hash
