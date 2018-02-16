@@ -6,6 +6,7 @@ module Portfolio
 
       def perform(user_id) # string
         ::Portfolio::Inputs::All.cache_input_holdings(user_id)
+        ::Portfolio::Aggregate.cache_aggregate_holdings(user_id)
       end
 
     end
