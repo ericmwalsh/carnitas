@@ -15,6 +15,17 @@ class PortfolioController < ApplicationController
     )
   end
 
+  # PUT /new_portfolio/exchanges/refresh
+  def exchanges_refresh
+    render json: data_wrapper(
+      ::Portfolio::Exchanges::Refresh.run(
+        current_user,
+        params[:key],
+        params[:provider]
+      )
+    )
+  end
+
   # GET /new_portfolio/inputs
   def inputs
     render json: data_wrapper(
