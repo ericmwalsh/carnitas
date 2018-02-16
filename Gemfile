@@ -1,3 +1,4 @@
+ruby '2.5.0'
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -42,6 +43,8 @@ gem 'sidekiq'
 gem 'sidekiq-cron'
 
 gem 'rack-cors', :require => 'rack/cors'
+
+gem 'rollbar'
 
 # EXCHANGES
 # gem 'binance'

@@ -169,6 +169,8 @@ GEM
       redis-store (>= 1.2, < 2)
     redis-store (1.4.1)
       redis (>= 2.2, < 5)
+    rollbar (2.15.5)
+      multi_json
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -240,6 +242,7 @@ DEPENDENCIES
   rails (~> 5.1.5)
   redis
   redis-rails
+  rollbar
   rspec
   sidekiq
   sidekiq-cron
@@ -247,6 +250,9 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
   web-console (>= 3.3.0)
+
+RUBY VERSION
+   ruby 2.5.0p0
 
 BUNDLED WITH
    1.16.1
