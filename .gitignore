@@ -18,3 +18,10 @@
 
 .byebug_history
 .env
+
+.ruby-gemset
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
