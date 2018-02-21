@@ -2,23 +2,27 @@
 # https://www.cookieshq.co.uk/posts/encrypting-secrets-with-rails
 module Utilities
   class Encryptor < ::ActiveSupport::MessageEncryptor
-    # create key/salt rotation system to ensure added security
-    KEY = ENV['ENCRYPTOR_KEY_0']
-    SALT = ENV['ENCRYPTOR_SALT_0']
-
-    def initialize
-      passphrase = ActiveSupport::KeyGenerator.new(KEY).generate_key(SALT, 32)
+    def initialize(key, salt) # string, string
+      passphrase = ActiveSupport::KeyGenerator.new(key).generate_key(salt, 32)
       super(passphrase)
     end
 
     class << self
 
       def encrypt(value)
-        ::ENCRYPTOR.encrypt_and_sign(value)
+        encryptor = ::ENCRYPTOR
+          .sample
+        [
+          encryptor[0],
+          encryptor[1].encrypt_and_sign(value)
+        ]
       end
 
-      def decrypt(value)
-        ::ENCRYPTOR.decrypt_and_verify(value)
+      def decrypt(value, encryptor)
+        ::ENCRYPTOR
+          .find{|encryptor_arr| encryptor_arr[0] == encryptor}
+          .last
+          .decrypt_and_verify(value)
       end
 
       def encryptor

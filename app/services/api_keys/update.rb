@@ -31,9 +31,10 @@ module ApiKeys
 
       def api_key(api_key_params)
         if api_key_params[:secret].present?
+          encrypt_array = ::Utilities::Encryptor.encrypt(api_key_params[:secret])
           api_key_params.merge(
-            secret: ::Utilities::Encryptor.encrypt(api_key_params[:secret]),
-            encryptor: ::Utilities::Encryptor.encryptor
+            encryptor: encrypt_array[0],
+            secret: encrypt_array[1],
           )
         else
           api_key_params

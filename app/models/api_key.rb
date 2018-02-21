@@ -40,7 +40,7 @@ class ApiKey < ApplicationRecord
   end
 
   def api_secret
-    @api_secret ||= ::Utilities::Encryptor.decrypt(secret)
+    @api_secret ||= ::Utilities::Encryptor.decrypt(secret, encryptor)
   end
 
   def update_holdings

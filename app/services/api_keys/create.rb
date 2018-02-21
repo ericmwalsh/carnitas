@@ -23,10 +23,11 @@ module ApiKeys
       private
 
       def api_key(user_id, api_key_params)
+        encrypt_array = ::Utilities::Encryptor.encrypt(api_key_params[:secret])
         api_key_params.merge(
           user_id: user_id,
-          secret: ::Utilities::Encryptor.encrypt(api_key_params[:secret]),
-          encryptor: ::Utilities::Encryptor.encryptor
+          encryptor: encrypt_array[0],
+          secret: encrypt_array[1],
         )
       end
 
