@@ -15,8 +15,9 @@ Sidekiq.configure_server do |config|
   }
 end
 
-Sidekiq.configure_server do |config|
+Sidekiq.configure_client do |config|
   config.redis = {
+    url: ENV['REDIS_URL'],
     size: 5
   }
 end

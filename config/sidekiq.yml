@@ -1,2 +1,8 @@
 # https://github.com/mperham/sidekiq/wiki/Problems-and-Troubleshooting
-:concurrency: 3
+:concurrency: 5
+:queues:
+  - apikey
+  - wallet
+  - input
+  - default
+  - rollbar

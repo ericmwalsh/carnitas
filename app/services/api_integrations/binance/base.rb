@@ -1,4 +1,5 @@
 # ::ApiIntegrations::Binance::Base
+# https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
 module ApiIntegrations
   module Binance
     class Base
@@ -53,10 +54,25 @@ module ApiIntegrations
               req.url url
               req.params.merge! options
             end
-            if response.status == 429
-              disable_requests
-            end
+            intercept_errors(response.status, response.body)
             response.body
+          end
+        end
+
+        def intercept_errors(status, body) # integer, hash
+          case status
+          when 418, 429
+            disable_requests
+            raise ::Exceptions::BinanceApiRateLimitError.new(body, status)
+          when 400...500
+            # user side
+            raise ::Exceptions::BinanceApiInputError.new(body, status)
+          when 504
+            # message sent, status UNKNOWN
+            raise ::Exceptions::BinanceApiUnknownError.new(body, status)
+          when 500...600
+            # binance error
+            raise ::Exceptions::BinanceApiError.new(body, status)
           end
         end
 
