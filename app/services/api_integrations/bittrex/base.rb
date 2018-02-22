@@ -63,9 +63,6 @@ module ApiIntegrations
           when 400...500
             # user side
             raise ::Exceptions::BittrexApiInputError.new(body, status)
-          when 504
-            # message sent, status UNKNOWN
-            raise ::Exceptions::BittrexApiUnknownError.new(body, status)
           when 500...600
             # bittrex error
             raise ::Exceptions::BittrexApiServerError.new(body, status)

@@ -6,9 +6,7 @@ module ApiIntegrations
       class << self
 
         def accounts(key, secret, passphrase)
-          client(key, secret, passphrase).accounts do |resp|
-            resp
-          end
+          request(key, secret, passphrase, :accounts)
         end
 
       end
