@@ -35,6 +35,11 @@ module Exceptions
       "Bittrex Error // Message: #{response_hash['message']}"
     end
 
+    # #<Coinbase::Wallet::AuthenticationError: invalid signature>
+    def coinbase_error_message(error_object) # error_object
+      "Coinbase Error // #{error_object.class.to_s}: #{error_object.message}"
+    end
+
   end
 
   class UnauthorizedError < BaseError
@@ -105,6 +110,13 @@ module Exceptions
     end
   end
 
+  # coinbase
+  class CoinbaseApiInputError < ApiInputError
+    def initialize(error_object, error_code = API_INPUT) # hash, integer
+      super(coinbase_error_message(error_object), error_code)
+    end
+  end
+
   # rate limit errors
 
   # binance
@@ -118,6 +130,13 @@ module Exceptions
   class BittrexApiRateLimitError < ApiRateLimitError
     def initialize(error_hash, error_code = RATE_LIMIT)  # hash, integer
       super(bittrex_error_message(error_hash), error_code)
+    end
+  end
+
+  # coinbase
+  class CoinbaseApiRateLimitError < ApiRateLimitError
+    def initialize(error_object, error_code = RATE_LIMIT) # hash, integer
+      super(coinbase_error_message(error_object), error_code)
     end
   end
 
@@ -137,6 +156,13 @@ module Exceptions
     end
   end
 
+  # coinbase
+  class CoinbaseApiServerError < ApiServerError
+    def initialize(error_object, error_code = API_ERROR) # hash, integer
+      super(coinbase_error_message(error_object), error_code)
+    end
+  end
+
   # status unknown errors
 
   # binance
@@ -150,6 +176,13 @@ module Exceptions
   class BittrexApiUnknownError < ApiUnknownError
     def initialize(error_hash, error_code = API_STATUS_UNKNOWN) # hash, integer
       super(bittrex_error_message(error_hash), error_code)
+    end
+  end
+
+  # coinbase
+  class CoinbaseApiUnknownError < ApiUnknownError
+    def initialize(error_object, error_code = API_STATUS_UNKNOWN) # hash, integer
+      super(coinbase_error_message(error_object), error_code)
     end
   end
 

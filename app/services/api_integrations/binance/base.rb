@@ -64,9 +64,11 @@ module ApiIntegrations
           when 418, 429
             disable_requests
             raise ::Exceptions::BinanceApiRateLimitError.new(body, status)
-          when 400...500
+          when 401
             # user side
             raise ::Exceptions::BinanceApiInputError.new(body, status)
+          when 400...500
+            raise ::Exceptions::BinanceApiServerError.new(body, status)
           when 504
             # message sent, status UNKNOWN
             raise ::Exceptions::BinanceApiUnknownError.new(body, status)

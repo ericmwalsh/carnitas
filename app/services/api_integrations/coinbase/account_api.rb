@@ -6,7 +6,7 @@ module ApiIntegrations
       class << self
 
         def accounts(key, secret)
-          client(key, secret).accounts
+          request(key, secret, :accounts)
         end
 
       end
