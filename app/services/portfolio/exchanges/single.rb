@@ -30,7 +30,7 @@ module Portfolio
         rescue ::Exceptions::ApiInputError => err
           Rollbar.error(err)
           if api_key.is_valid
-            apikey.update_column(
+            api_key.update_column(
               :is_valid,
               false
             )

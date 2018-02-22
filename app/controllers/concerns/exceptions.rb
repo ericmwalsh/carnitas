@@ -61,26 +61,26 @@ module Exceptions
   # base errors, 4 of them
   # input / rate_limit / server / unknown
   class ApiInputError < BaseError
-    def initialize(message = 'API Input Invalid') # string
-      super(message, API_INPUT)
+    def initialize(message = 'API Input Invalid', status = API_INPUT) # string, integer
+      super(message, status)
     end
   end
 
   class ApiRateLimitError < BaseError
-    def initialize(message = 'API Rate Limit Reached') # string
-      super(message, RATE_LIMIT)
+    def initialize(message = 'API Rate Limit Reached', status = RATE_LIMIT) # string, integer
+      super(message, status)
     end
   end
 
   class ApiServerError < BaseError
-    def initialize(message = 'API Server Error') # string
-      super(message, API_ERROR)
+    def initialize(message = 'API Server Error', status = API_ERROR) # string, integer
+      super(message, status)
     end
   end
 
   class ApiUnknownError < BaseError
-    def initialize(message = 'API Response Status Unknown') # string
-      super(message, API_STATUS_UNKNOWN)
+    def initialize(message = 'API Response Status Unknown', status = API_STATUS_UNKNOWN) # string, integer
+      super(message, status)
     end
   end
 
