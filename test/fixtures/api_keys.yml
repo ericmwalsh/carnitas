@@ -11,10 +11,12 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  passphrase :string
+#  is_valid   :boolean          default(TRUE), not null
 #
 # Indexes
 #
-#  index_api_keys_on_user_id_and_key  (user_id,key) UNIQUE
+#  index_api_keys_on_user_id_and_is_valid  (user_id,is_valid)
+#  index_api_keys_on_user_id_and_key       (user_id,key) UNIQUE
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

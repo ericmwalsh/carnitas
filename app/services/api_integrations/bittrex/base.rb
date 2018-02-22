@@ -29,7 +29,7 @@ module ApiIntegrations
 
         def request(client, method, url, options = {})
           if requests_disabled?
-            raise ::Exceptions::RateLimitError
+            raise ::Exceptions::ApiRateLimitError
           else
             response = client.send(method) do |req|
               req.url url

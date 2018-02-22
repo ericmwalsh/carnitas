@@ -27,6 +27,16 @@ module Portfolio
           end
 
           Rails.cache.write(cache_key(api_key), holdings) && holdings
+        rescue ::Exceptions::ApiInputError => err
+          Rollbar.error(err)
+          if api_key.is_valid
+            apikey.update_column(
+              :is_valid,
+              false
+            )
+          end
+
+          {}
         end
 
         def clear_exchange_holding(cache_key) # string

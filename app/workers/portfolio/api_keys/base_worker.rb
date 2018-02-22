@@ -8,12 +8,14 @@ module Portfolio
 
       def handle_exceptions(&block)
         block.call
-      rescue ::Exceptions::BinanceApiInputError => err
-        #
-        puts 'api input'
+      rescue ::Exceptions::ApiRateLimitError => err
+        # rate limit issue, reschedule in 3 mins
+        # self.class.perform_in
+        puts 'api limit'
         puts err
-      rescue ::Exceptions::BinanceApiUnknownError => err
-        #
+      rescue ::Exceptions::ApiUnknownError => err
+        # request completed but result unknown
+        Rollbar.error(err)
         puts 'api unknown'
         puts err
       end

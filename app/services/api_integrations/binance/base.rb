@@ -48,7 +48,7 @@ module ApiIntegrations
 
         def request(client, method, url, options = {})
           if requests_disabled?
-            raise ::Exceptions::RateLimitError
+            raise ::Exceptions::ApiRateLimitError
           else
             response = client.send(method) do |req|
               req.url url
@@ -72,7 +72,7 @@ module ApiIntegrations
             raise ::Exceptions::BinanceApiUnknownError.new(body, status)
           when 500...600
             # binance error
-            raise ::Exceptions::BinanceApiError.new(body, status)
+            raise ::Exceptions::BinanceApiServerError.new(body, status)
           end
         end
 

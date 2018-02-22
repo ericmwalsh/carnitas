@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
 
   before_action :set_default_json_format
 
-  rescue_from ::Exceptions::BadRequestError, with: :error_wraper
+  rescue_from ::Exceptions::BaseError, with: :error_wraper
 
   private
 
