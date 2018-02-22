@@ -27,7 +27,12 @@ module Exceptions
 
     # {"code"=>-2014, "msg"=>"API-key format invalid."}
     def binance_error_message(error_hash) # hash
-      "Code #{error_hash['code']}: #{error_hash['msg']}"
+      "Binance Error // Code #{error_hash['code']}: #{error_hash['msg']}"
+    end
+
+    # {"success"=>false, "message"=>"APIKEY_INVALID", "result"=>nil}
+    def bittrex_error_message(response_hash) # hash
+      "Bittrex Error // Message: #{response_hash['message']}"
     end
 
   end
@@ -93,12 +98,26 @@ module Exceptions
     end
   end
 
+  # bittrex
+  class BittrexApiInputError < ApiInputError
+    def initialize(error_hash, error_code = API_INPUT) # hash, integer
+      super(bittrex_error_message(error_hash), error_code)
+    end
+  end
+
   # rate limit errors
 
   # binance
   class BinanceApiRateLimitError < ApiRateLimitError
     def initialize(error_hash, error_code = RATE_LIMIT)  # hash, integer
       super(binance_error_message(error_hash), error_code)
+    end
+  end
+
+  # bittrex
+  class BittrexApiRateLimitError < ApiRateLimitError
+    def initialize(error_hash, error_code = RATE_LIMIT)  # hash, integer
+      super(bittrex_error_message(error_hash), error_code)
     end
   end
 
@@ -111,12 +130,26 @@ module Exceptions
     end
   end
 
+  # bittrex
+  class BittrexApiServerError < ApiServerError
+    def initialize(error_hash, error_code = API_ERROR) # hash, integer
+      super(bittrex_error_message(error_hash), error_code)
+    end
+  end
+
   # status unknown errors
 
   # binance
   class BinanceApiUnknownError < ApiUnknownError
     def initialize(error_hash, error_code = API_STATUS_UNKNOWN) # hash, integer
       super(binance_error_message(error_hash), error_code)
+    end
+  end
+
+  # bittrex
+  class BittrexApiUnknownError < ApiUnknownError
+    def initialize(error_hash, error_code = API_STATUS_UNKNOWN) # hash, integer
+      super(bittrex_error_message(error_hash), error_code)
     end
   end
 

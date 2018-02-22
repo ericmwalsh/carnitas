@@ -18,7 +18,9 @@ module Portfolio
         raise err
       rescue ::Exceptions::ApiUnknownError => err
         # request completed but result unknown
+        # raise a rollbar notification (for posterity's sake)
         Rollbar.error(err)
+        # doesn't raise the original err so it doesn't reschedule and accidentally duplicate the call
         puts 'api unknown'
         puts err
       end
