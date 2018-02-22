@@ -117,15 +117,15 @@ module Exceptions
 
   # coinbase
   class CoinbaseApiInputError < ApiInputError
-    def initialize(error_object, error_code = API_INPUT) # hash, integer
-      super(coinbase_error_message(error_object), error_code)
+    def initialize(error_object) # error_object
+      super(coinbase_error_message(error_object))
     end
   end
 
   # gdax
   class GdaxApiInputError < ApiInputError
-    def initialize(error_object, error_code = API_INPUT) # hash, integer
-      super(gdax_error_message(error_object), error_code)
+    def initialize(error_object) # error_object
+      super(gdax_error_message(error_object))
     end
   end
 
@@ -147,15 +147,15 @@ module Exceptions
 
   # coinbase
   class CoinbaseApiRateLimitError < ApiRateLimitError
-    def initialize(error_object, error_code = RATE_LIMIT) # hash, integer
-      super(coinbase_error_message(error_object), error_code)
+    def initialize(error_object) # error_object
+      super(coinbase_error_message(error_object))
     end
   end
 
   # gdax
   class GdaxApiRateLimitError < ApiRateLimitError
-    def initialize(error_object, error_code = RATE_LIMIT) # hash, integer
-      super(gdax_error_message(error_object), error_code)
+    def initialize(error_object) # error_object
+      super(gdax_error_message(error_object))
     end
   end
 
@@ -177,15 +177,15 @@ module Exceptions
 
   # coinbase
   class CoinbaseApiServerError < ApiServerError
-    def initialize(error_object, error_code = API_ERROR) # hash, integer
-      super(coinbase_error_message(error_object), error_code)
+    def initialize(error_object) # error_object
+      super(coinbase_error_message(error_object))
     end
   end
 
   # gdax
   class GdaxApiServerError < ApiServerError
-    def initialize(error_object, error_code = API_ERROR) # hash, integer
-      super(gdax_error_message(error_object), error_code)
+    def initialize(error_object) # error_object
+      super(gdax_error_message(error_object))
     end
   end
 
