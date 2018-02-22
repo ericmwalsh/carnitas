@@ -26,9 +26,19 @@ module Portfolio
               )
           end
 
+          # mark apikey as valid if previously marked invalid
+          if !api_key.is_valid
+            api_key.update_column(
+              :is_valid,
+              true
+            )
+          end
+
           Rails.cache.write(cache_key(api_key), holdings) && holdings
         rescue ::Exceptions::ApiInputError => err
+          # raise a rollbar notification (for posterity's sake)
           Rollbar.error(err)
+          # mark apikey as invalid if previously marked valid
           if api_key.is_valid
             api_key.update_column(
               :is_valid,
