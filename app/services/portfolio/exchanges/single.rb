@@ -26,6 +26,12 @@ module Portfolio
               )
           end
 
+          wrapped_holdings = {
+            'success' => true,
+            'message' => nil,
+            'holdings' => holdings
+          }
+
           # mark apikey as valid if previously marked invalid
           if !api_key.is_valid
             api_key.update_column(
@@ -34,7 +40,7 @@ module Portfolio
             )
           end
 
-          Rails.cache.write(cache_key(api_key), holdings) && holdings
+          Rails.cache.write(cache_key(api_key), wrapped_holdings) && wrapped_holdings
         rescue ::Exceptions::ApiInputError => err
           # raise a rollbar notification (for posterity's sake)
           Rollbar.error(err)
@@ -46,7 +52,11 @@ module Portfolio
             )
           end
 
-          {}
+          {
+            'success' => false,
+            'message' => 'Invalid API credentials',
+            'holdings' => {}
+          }
         end
 
         def clear_exchange_holding(cache_key) # string

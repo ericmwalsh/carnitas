@@ -19,7 +19,7 @@ module Portfolio
               api_key
             )
             holdings["#{api_key.provider}/#{api_key.key.first(10)}"] = exchange_holding
-            add_holdings(holdings['total'], exchange_holding)
+            add_holdings(holdings['total'], exchange_holding['holdings'])
           end
 
           Rails.cache.write(cache_key(user_id), holdings) && holdings
@@ -36,7 +36,7 @@ module Portfolio
         private
 
         def api_keys(user_id) # string
-          ::ApiKey.where(user_id: user_id, is_valid: true)
+          ::ApiKey.where(user_id: user_id)
         end
 
         def add_holdings(holdings, exchange_holdings) # hash, hash
