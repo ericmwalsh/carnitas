@@ -46,7 +46,10 @@ class ApiKey < ApplicationRecord
   end
 
   def update_holdings
-    ::Portfolio::ApiKeys::UpdateHoldingsWorker.perform_async(id)
+    ::Portfolio::ApiKeys::UpdateHoldingsWorker.perform_async(
+      user_id,
+      id
+    )
   end
 
   def clear_holdings

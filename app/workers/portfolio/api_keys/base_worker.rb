@@ -6,7 +6,9 @@ module Portfolio
 
       sidekiq_options :queue => 'apikey', :retry => 2
 
-      def handle_exceptions(&block)
+      private
+
+      def handle_exceptions(&block) # block
         block.call
       rescue ::Exceptions::ApiRateLimitError => err
         # rate limit issue, reschedule in 3 mins
@@ -23,6 +25,17 @@ module Portfolio
         # doesn't raise the original err so it doesn't reschedule and accidentally duplicate the call
         puts 'api unknown'
         puts err
+      end
+
+      def push_holdings_to_user(user_id, holdings) # string, hash
+        # https://github.com/pusher/pusher-http-node/issues/30#issuecomment-198354094
+        user_holdings_pusher_key = "carnitas;portfolio;#{user_id.sub(/\|/, '-')}"
+
+        Pusher.trigger(
+          user_holdings_pusher_key,
+          'update',
+          holdings
+        )
       end
 
     end

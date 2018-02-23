@@ -10,7 +10,8 @@ module Portfolio
             ::Portfolio::Exchanges::Single.cache_exchange_holding(api_key)
           end
           ::Portfolio::Exchanges::All.cache_exchange_holdings(user_id)
-          ::Portfolio::Aggregate.cache_aggregate_holdings(user_id)
+          holdings = ::Portfolio::Aggregate.cache_aggregate_holdings(user_id)
+          push_holdings_to_user(user_id, holdings)
         end
       end
 
