@@ -28,7 +28,7 @@ class Input < ApplicationRecord
 
   def self.get_currency_symbols
     Rails.cache.fetch('symbols') do
-      ::ApiIntegrations::CoinMarketCap.refresh
+      ::ExchangeWrapper::Temp::CoinMarketCap.refresh
     end
   end
 

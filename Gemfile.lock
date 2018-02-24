@@ -74,6 +74,12 @@ GEM
     et-orbi (1.0.9)
       tzinfo
     eventmachine (1.2.5)
+    exchange_wrapper (0.1.1)
+      coinbase (~> 4.2)
+      coinbase-exchange (~> 0.2)
+      faraday (~> 0.14)
+      faraday_middleware (~> 0.12)
+      httparty (~> 0.16)
     faraday (0.14.0)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
@@ -229,6 +235,7 @@ DEPENDENCIES
   coinbase
   coinbase-exchange
   dotenv-rails
+  exchange_wrapper
   faraday
   faraday_middleware
   httparty

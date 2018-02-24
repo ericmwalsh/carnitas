@@ -12,13 +12,13 @@ module Portfolio
 
         def cache_exchange_holding(api_key) # ApiKey model
           holdings = if api_key.gdax_provider?
-            ::ApiIntegrations::Gdax::Utils.holdings(
+            ::ExchangeWrapper::Gdax::Utils.holdings(
               api_key.key,
               api_key.api_secret,
               api_key.passphrase
             )
           else
-            "::ApiIntegrations::#{api_key.provider.capitalize}::Utils"
+            "::ExchangeWrapper::#{api_key.provider.capitalize}::Utils"
               .constantize
               .holdings(
                 api_key.key,

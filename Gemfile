@@ -34,11 +34,6 @@ gem 'oj'
 gem 'rspec'
 gem 'annotate'
 
-gem 'httparty'
-
-gem 'faraday'
-gem 'faraday_middleware'
-
 gem 'sidekiq'
 gem 'sidekiq-cron'
 
@@ -47,10 +42,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'rollbar'
 
 # EXCHANGES
-# gem 'binance'
-# gem 'bittrex', git: 'https://github.com/ChalupaIO/bittrex', branch: 'master'
-gem 'coinbase', require: 'coinbase/wallet'
-gem 'coinbase-exchange'
+gem 'exchange_wrapper'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

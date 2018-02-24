@@ -2,6 +2,6 @@ class PriceRefreshWorker
   include Sidekiq::Worker
 
   def perform(*args)
-    ::ApiIntegrations::CoinMarketCap.refresh
+    ::ExchangeWrapper::Temp::CoinMarketCap.refresh
   end
 end

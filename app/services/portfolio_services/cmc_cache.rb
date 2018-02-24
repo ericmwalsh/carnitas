@@ -3,7 +3,7 @@ module PortfolioServices
     class << self
 
       def run
-        ::ApiIntegrations::CoinMarketCap.get_request
+        ::ExchangeWrapper::Temp::CoinMarketCap.get_request
       end
 
     end
