@@ -232,13 +232,8 @@ PLATFORMS
 DEPENDENCIES
   annotate
   byebug
-  coinbase
-  coinbase-exchange
   dotenv-rails
   exchange_wrapper
-  faraday
-  faraday_middleware
-  httparty
   jwt
   listen (>= 3.0.5, < 3.2)
   oj

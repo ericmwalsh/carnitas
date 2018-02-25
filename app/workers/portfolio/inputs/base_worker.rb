@@ -1,10 +1,10 @@
 # ::Portfolio::Inputs::BaseWorker
 module Portfolio
   module Inputs
-    class BaseWorker
-      include Sidekiq::Worker
+    class BaseWorker < ::Portfolio::BaseWorker
 
       sidekiq_options :queue => 'input', :retry => 2
+
     end
   end
 end
