@@ -31,10 +31,9 @@ gem 'jwt'
 
 gem 'oj'
 
-gem 'rspec'
-
 gem 'sidekiq'
 gem 'sidekiq-cron'
+gem 'sidekiq-failures'
 
 gem 'rack-cors', :require => 'rack/cors'
 
@@ -48,6 +47,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
   gem 'annotate'
+  gem 'rspec'
 end
 
 group :development do
